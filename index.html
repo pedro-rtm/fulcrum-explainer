@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Pedro Is Building</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --copper: #a0714f;
+      --copper-light: #c4956e;
+      --copper-bg: #a0714f12;
+      --copper-border: #a0714f30;
+      --bg: #faf8f5;
+      --bg-alt: #f2eeea;
+      --bg-card: #ffffff;
+      --text: #2a2520;
+      --text-secondary: #6b6058;
+      --text-light: #8a8078;
+      --border: #e8e2dc;
+      --shadow: 0 2px 12px rgba(42, 37, 32, 0.06);
+      --shadow-hover: 0 4px 20px rgba(42, 37, 32, 0.1);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s ease-out;
+    }
+
+    nav.scrolled { box-shadow: 0 1px 8px rgba(42, 37, 32, 0.08); }
+
+    .nav-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--copper);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+    }
+
+    .nav-toggle:hover { border-color: var(--copper-border); color: var(--copper); }
+
+    .nav-toggle svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease-out;
+    }
+
+    .nav-toggle.open svg { transform: rotate(180deg); }
+
+    .nav-menu {
+      position: fixed;
+      top: 49px;
+      left: 0;
+      right: 0;
+      background: rgba(250, 248, 245, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 20px 16px;
+      transform: translateY(-110%);
+      opacity: 0;
+      transition: transform 0.3s ease-out, opacity 0.25s ease-out;
+      pointer-events: none;
+    }
+
+    .nav-menu.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-menu a {
+      display: block;
+      padding: 10px 0;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s ease-out;
+    }
+
+    .nav-menu a:last-child { border-bottom: none; }
+    .nav-menu a:hover { color: var(--copper); }
+
+    /* ---- LAYOUT ---- */
+    section {
+      padding: 56px 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .section-alt { background: var(--bg-alt); }
+
+    /* ---- HERO ---- */
+    .hero {
+      padding-top: 100px;
+      padding-bottom: 48px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--copper-bg);
+      color: var(--copper);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(28px, 7vw, 40px);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      max-width: 480px;
+      margin: 0 auto 32px;
+    }
+
+    .hero-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      color: var(--copper);
+      text-decoration: none;
+      transition: all 0.3s ease-out;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero-arrow:hover {
+      border-color: var(--copper);
+      background: var(--copper-bg);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ---- HEADINGS ---- */
+    h2 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(22px, 5.5vw, 30px);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+    }
+
+    .section-lead {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 32px;
+    }
+
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    /* ---- ANALOGY BOX ---- */
+    .analogy {
+      background: var(--copper-bg);
+      border-left: 3px solid var(--copper);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+    }
+
+    .analogy p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    .analogy strong { color: var(--copper); }
+
+    /* ---- PROCESS STEPS ---- */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--copper);
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-content h3 { margin-bottom: 4px; }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ---- DIMENSION CARDS ---- */
+    .dimensions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dim-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: all 0.2s ease-out;
+      cursor: pointer;
+    }
+
+    .dim-card:hover {
+      border-color: var(--copper-border);
+      box-shadow: var(--shadow);
+    }
+
+    .dim-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0;
+      transition: margin-bottom 0.2s ease-out;
+    }
+
+    .dim-card.expanded .dim-header { margin-bottom: 12px; }
+
+    .dim-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--copper-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .dim-title {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .dim-chevron {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--text-light);
+      transition: transform 0.3s ease-out;
+    }
+
+    .dim-card.expanded .dim-chevron { transform: rotate(180deg); }
+
+    .dim-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .dim-card.expanded .dim-body { max-height: 200px; }
+
+    .dim-body p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      padding-left: 52px;
+    }
+
+    /* ---- CLIENT PROFILE ---- */
+    .client-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .client-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .client-card h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .client-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ---- PRICING ---- */
+    .pricing-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .price-card.featured {
+      border-color: var(--copper);
+    }
+
+    .price-card.featured::before {
+      content: 'STARTING HERE';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--copper);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 0 0 0 8px;
+    }
+
+    .price-tier {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .price-amount {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .price-amount span {
+      font-size: 14px;
+      color: var(--text-light);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 400;
+    }
+
+    .price-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .projection {
+      background: var(--copper-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .projection h3 {
+      font-size: 15px;
+      margin-bottom: 16px;
+      color: var(--copper);
+    }
+
+    .proj-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--copper-border);
+    }
+
+    .proj-row:last-child { border-bottom: none; }
+
+    .proj-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .proj-value {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .proj-row.highlight .proj-value {
+      color: var(--copper);
+      font-size: 18px;
+    }
+
+    /* ---- TIMELINE ---- */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .tl-item {
+      position: relative;
+      padding-bottom: 28px;
+    }
+
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 7px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--copper);
+      background: var(--bg);
+    }
+
+    .tl-item.active::before {
+      background: var(--copper);
+    }
+
+    .tl-date {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--copper);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .tl-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .tl-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      padding: 32px 20px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* ---- FADE IN ---- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- LANGUAGE TOGGLE ---- */
+    .lang-toggle {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .lang-btn {
+      padding: 6px 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      background: none;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+    }
+
+    .lang-btn.active {
+      background: var(--copper);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Pedro Rivera</div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span data-en="Sections" data-es="Secciones">Sections</span>
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M6 8l4 4 4-4"/>
+      </svg>
+    </button>
+  </div>
+  <div class="nav-menu" id="navMenu">
+    <a href="#simple" data-en="The Simple Version" data-es="La version simple">The Simple Version</a>
+    <a href="#process" data-en="How It Works" data-es="Como funciona">How It Works</a>
+    <a href="#checks" data-en="The 7 Things I Check" data-es="Las 7 cosas que reviso">The 7 Things I Check</a>
+    <a href="#clients" data-en="Who Hires Me" data-es="Quien me contrata">Who Hires Me</a>
+    <a href="#business" data-en="The Business" data-es="El negocio">The Business</a>
+    <a href="#plan" data-en="The Plan" data-es="El plan">The Plan</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-badge" data-en="NEW VENTURE &middot; 2026" data-es="NUEVO PROYECTO &middot; 2026">NEW VENTURE &middot; 2026</div>
+    <h1 data-en="Pedro is becoming a Technology&nbsp;Due&nbsp;Diligence advisor" data-es="Pedro sera asesor de Due&nbsp;Diligence tecnologico">Pedro is becoming a Technology&nbsp;Due&nbsp;Diligence advisor</h1>
+    <p class="hero-sub" data-en="Before investment firms buy a company, they need someone to check if the technology is as good as the seller claims. That's what I do." data-es="Antes de que un fondo de inversion compre una empresa, necesitan que alguien verifique si la tecnologia es tan buena como dice el vendedor. Eso es lo que hago.">Before investment firms buy a company, they need someone to check if the technology is as good as the seller claims. That's what I do.</p>
+    <a href="#simple" class="hero-arrow" aria-label="Scroll down">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8l4 4 4-4"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- LANGUAGE -->
+<div style="text-align: center; padding: 0 20px;">
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="en">English</button>
+    <button class="lang-btn" data-lang="es">Espanol</button>
+  </div>
+</div>
+
+<!-- THE SIMPLE VERSION -->
+<section id="simple">
+  <div class="container fade-in">
+    <h2 data-en="The Simple Version" data-es="La version simple">The Simple Version</h2>
+    <p class="section-lead" data-en="Think of it like a home inspection — but for a company's technology." data-es="Piensa en ello como una inspeccion de una casa, pero de la tecnologia de una empresa.">Think of it like a home inspection — but for a company's technology.</p>
+
+    <div class="analogy">
+      <p data-en="When you buy a house, you hire an inspector to check the roof, plumbing, electrical, and foundation before signing. <strong>Investment firms do the same thing when buying companies — except instead of pipes and wiring, I inspect the software, the engineering team, the servers, and the security.</strong> My report tells the buyer what's solid, what needs fixing, and how much it will cost." data-es="Cuando compras una casa, contratas a un inspector para revisar el tejado, la fontaneria, la electricidad y los cimientos antes de firmar. <strong>Los fondos de inversion hacen lo mismo cuando compran empresas, pero en vez de tuberias y cableado, yo inspecciono el software, el equipo de ingenieria, los servidores y la seguridad.</strong> Mi informe le dice al comprador que esta bien, que hay que arreglar y cuanto costara.">When you buy a house, you hire an inspector to check the roof, plumbing, electrical, and foundation before signing. <strong>Investment firms do the same thing when buying companies — except instead of pipes and wiring, I inspect the software, the engineering team, the servers, and the security.</strong> My report tells the buyer what's solid, what needs fixing, and how much it will cost.</p>
+    </div>
+
+    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.55;" data-en="These investment firms — called Private Equity (PE) funds — buy companies worth tens or hundreds of millions of euros. A bad technology decision could cost them millions. They need an independent expert who can cut through the sales pitch and give them the truth." data-es="Estos fondos de inversion — llamados fondos de Private Equity (PE) — compran empresas que valen decenas o cientos de millones de euros. Una mala decision tecnologica les puede costar millones. Necesitan un experto independiente que vaya mas alla del discurso comercial y les diga la verdad.">These investment firms — called Private Equity (PE) funds — buy companies worth tens or hundreds of millions of euros. A bad technology decision could cost them millions. They need an independent expert who can cut through the sales pitch and give them the truth.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="process" class="section-alt">
+  <div class="container fade-in">
+    <h2 data-en="How a Typical Engagement Works" data-es="Como funciona un proyecto tipico">How a Typical Engagement Works</h2>
+    <p class="section-lead" data-en="Each project takes 10–15 working days. Here's the process:" data-es="Cada proyecto dura 10-15 dias laborables. Este es el proceso:">Each project takes 10–15 working days. Here's the process:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3 data-en="The Call" data-es="La llamada">The Call</h3>
+          <p data-en="An investment firm is about to buy a company. They call me and say: &laquo;We need someone to check their technology before we sign.&raquo;" data-es="Un fondo de inversion esta a punto de comprar una empresa. Me llaman y dicen: &laquo;Necesitamos que alguien revise su tecnologia antes de firmar.&raquo;">An investment firm is about to buy a company. They call me and say: &laquo;We need someone to check their technology before we sign.&raquo;</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3 data-en="The Investigation" data-es="La investigacion">The Investigation</h3>
+          <p data-en="I review the company's code, interview the tech team, analyze their infrastructure, check their security, and look at their costs. Deep, structured, methodical." data-es="Reviso el codigo de la empresa, entrevisto al equipo tecnico, analizo su infraestructura, compruebo su seguridad y examino sus costes. Profundo, estructurado, metodico.">I review the company's code, interview the tech team, analyze their infrastructure, check their security, and look at their costs. Deep, structured, methodical.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3 data-en="The Report" data-es="El informe">The Report</h3>
+          <p data-en="I deliver a detailed report: what's strong, what's risky, exactly how much it would cost to fix, and a roadmap for improvements. Numbers, not opinions." data-es="Entrego un informe detallado: que es solido, que es arriesgado, exactamente cuanto costaria arreglarlo y una hoja de ruta de mejoras. Numeros, no opiniones.">I deliver a detailed report: what's strong, what's risky, exactly how much it would cost to fix, and a roadmap for improvements. Numbers, not opinions.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3 data-en="The Decision" data-es="La decision">The Decision</h3>
+          <p data-en="The investor uses my report to decide: buy, negotiate a lower price, or walk away. My work directly protects millions in investment." data-es="El inversor usa mi informe para decidir: comprar, negociar un precio menor, o no comprar. Mi trabajo protege directamente millones en inversiones.">The investor uses my report to decide: buy, negotiate a lower price, or walk away. My work directly protects millions in investment.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE 7 THINGS I CHECK -->
+<section id="checks">
+  <div class="container fade-in">
+    <h2 data-en="The 7 Things I Check" data-es="Las 7 cosas que reviso">The 7 Things I Check</h2>
+    <p class="section-lead" data-en="My framework covers every angle. Tap any item to see what it means in plain terms." data-es="Mi metodologia cubre todos los angulos. Toca cualquier elemento para ver que significa en terminos sencillos.">My framework covers every angle. Tap any item to see what it means in plain terms.</p>
+
+    <div class="dimensions">
+      <div class="dim-card" data-dim>
+        <div class="dim-header">
+          <div class="dim-icon">&#127959;</div>
+          <div class="dim-title" data-en="Architecture" data-es="Arquitectura">Architecture</div>
+          <svg class="dim-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8l4 4 4-4"/></svg>
+        </div>
+        <div class="dim-body">
+          <p data-en="Like checking a building's foundations and load-bearing walls. Is the software built on solid ground? Can it handle 10x more users without collapsing? How much &laquo;technical debt&raquo; — deferred maintenance — has built up, and what would it cost to fix?" data-es="Como comprobar los cimientos y muros de carga de un edificio. El software esta construido sobre terreno solido? Puede manejar 10 veces mas usuarios sin caer? Cuanta &laquo;deuda tecnica&raquo; — mantenimiento aplazado — se ha acumulado, y cuanto costaria arreglarla?">Like checking a building's foundations and load-bearing walls. Is the software built on solid ground? Can it handle 10x more users without collapsing? How much &laquo;technical debt&raquo; — deferred maintenance — has built up, and what would it cost to fix?</p>
+        </div>
+      </div>
+
+      <div class="dim-card" data-dim>
+        <div class="dim-header">
+          <div class="dim-icon">&#128101;</div>
+          <div class="dim-title" data-en="Team & People" data-es="Equipo y personas">Team & People</div>
+          <svg class="dim-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8l4 4 4-4"/></svg>
+        </div>
+        <div class="dim-body">
+          <p data-en="Who built this, and will they stay? Is there one genius holding everything together who might leave? Does the team have the skills needed for what comes next? Are they well-organized or chaotic?" data-es="Quien construyo esto, y se quedaran? Hay un genio que sostiene todo y que podria irse? El equipo tiene las habilidades necesarias para lo que viene? Estan bien organizados o son caoticos?">Who built this, and will they stay? Is there one genius holding everything together who might leave? Does the team have the skills needed for what comes next? Are they well-organized or chaotic?</p>
+        </div>
+      </div>
+
+      <div class="dim-card" data-dim>
+        <div class="dim-header">
+          <div class="dim-icon">&#128274;</div>
+          <div class="dim-title" data-en="Security" data-es="Seguridad">Security</div>
+          <svg class="dim-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8l4 4 4-4"/></svg>
+        </div>
+        <div class="dim-body">
+          <p data-en="Could a hacker break in? Is customer data properly protected? Does the company comply with European privacy laws (GDPR)? One breach after acquisition could cost more than the technology itself." data-es="Podria un hacker entrar? Los datos de los clientes estan bien protegidos? La empresa cumple con las leyes europeas de privacidad (RGPD)? Una brecha despues de la compra podria costar mas que la propia tecnologia.">Could a hacker break in? Is customer data properly protected? Does the company comply with European privacy laws (GDPR)? One breach after acquisition could cost more than the technology itself.</p>
+        </div>
+      </div>
+
+      <div class="dim-card" data-dim>
+        <div class="dim-header">
+          <div class="dim-icon">&#128202;</div>
+          <div class="dim-title" data-en="Data & Analytics" data-es="Datos y analitica">Data & Analytics</div>
+          <svg class="dim-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8l4 4 4-4"/></svg>
+        </div>
+        <div class="dim-body">
+          <p data-en="Is the company's data clean and usable, or a mess? Can they actually measure what's happening in their business? Is their data ready for AI and advanced analytics — the things that create future value?" data-es="Los datos de la empresa estan limpios y son utilizables, o son un desastre? Pueden medir realmente lo que ocurre en su negocio? Sus datos estan preparados para IA y analitica avanzada — las cosas que crean valor futuro?">Is the company's data clean and usable, or a mess? Can they actually measure what's happening in their business? Is their data ready for AI and advanced analytics — the things that create future value?</p>
+        </div>
+      </div>
+
+      <div class="dim-card" data-dim>
+        <div class="dim-header">
+          <div class="dim-icon">&#128176;</div>
+          <div class="dim-title" data-en="Costs" data-es="Costes">Costs</div>
+          <svg class="dim-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8l4 4 4-4"/></svg>
+        </div>
+        <div class="dim-body">
+          <p data-en="Is the company spending too much on technology? Are they overpaying for cloud services, software licenses, or staff? I quantify exactly where money is being wasted and how much could be saved." data-es="La empresa gasta demasiado en tecnologia? Estan pagando de mas por servicios en la nube, licencias de software o personal? Cuantifico exactamente donde se desperdicia dinero y cuanto se podria ahorrar.">Is the company spending too much on technology? Are they overpaying for cloud services, software licenses, or staff? I quantify exactly where money is being wasted and how much could be saved.</p>
+        </div>
+      </div>
+
+      <div class="dim-card" data-dim>
+        <div class="dim-header">
+          <div class="dim-icon">&#9881;&#65039;</div>
+          <div class="dim-title" data-en="Delivery Speed" data-es="Velocidad de entrega">Delivery Speed</div>
+          <svg class="dim-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8l4 4 4-4"/></svg>
+        </div>
+        <div class="dim-body">
+          <p data-en="How fast can this team ship new features? Are they releasing updates daily, monthly, or struggling to release at all? A slow team means slow growth — and growth is what the investor is paying for." data-es="Con que rapidez puede este equipo lanzar nuevas funcionalidades? Publican actualizaciones diariamente, mensualmente, o les cuesta publicar? Un equipo lento significa crecimiento lento, y el crecimiento es por lo que paga el inversor.">How fast can this team ship new features? Are they releasing updates daily, monthly, or struggling to release at all? A slow team means slow growth — and growth is what the investor is paying for.</p>
+        </div>
+      </div>
+
+      <div class="dim-card" data-dim>
+        <div class="dim-header">
+          <div class="dim-icon">&#127919;</div>
+          <div class="dim-title" data-en="Strategic Fit" data-es="Encaje estrategico">Strategic Fit</div>
+          <svg class="dim-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 8l4 4 4-4"/></svg>
+        </div>
+        <div class="dim-body">
+          <p data-en="Does the technology actually support where the business is going? If they want to expand into new markets or double in size, can the tech handle it — or will it need to be rebuilt from scratch?" data-es="La tecnologia realmente apoya hacia donde va el negocio? Si quieren expandirse a nuevos mercados o duplicar su tamano, la tecnologia lo aguanta, o habra que reconstruirla desde cero?">Does the technology actually support where the business is going? If they want to expand into new markets or double in size, can the tech handle it — or will it need to be rebuilt from scratch?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO HIRES ME -->
+<section id="clients" class="section-alt">
+  <div class="container fade-in">
+    <h2 data-en="Who Hires Me" data-es="Quien me contrata">Who Hires Me</h2>
+    <p class="section-lead" data-en="My clients are investment firms that buy and grow companies for a living." data-es="Mis clientes son fondos de inversion que compran y hacen crecer empresas como profesion.">My clients are investment firms that buy and grow companies for a living.</p>
+
+    <div class="client-grid">
+      <div class="client-card">
+        <h3 data-en="Private Equity Funds" data-es="Fondos de Private Equity">Private Equity Funds</h3>
+        <p data-en="Firms that buy companies, improve them over 3-7 years, and sell them for a profit. They manage billions of euros from pension funds, universities, and wealthy families. Before buying, they need to know what they're getting — that's where I come in." data-es="Firmas que compran empresas, las mejoran durante 3-7 anos y las venden con beneficio. Gestionan miles de millones de euros de fondos de pensiones, universidades y familias con patrimonio. Antes de comprar, necesitan saber que estan adquiriendo — ahi es donde entro yo.">Firms that buy companies, improve them over 3-7 years, and sell them for a profit. They manage billions of euros from pension funds, universities, and wealthy families. Before buying, they need to know what they're getting — that's where I come in.</p>
+      </div>
+      <div class="client-card">
+        <h3 data-en="The Sweet Spot" data-es="El punto ideal">The Sweet Spot</h3>
+        <p data-en="Companies with EUR 30M–400M in revenue. Big enough to have real technology, small enough that a single expert can assess it in two weeks. Too small for the big consulting firms, too important for guesswork." data-es="Empresas con EUR 30M-400M de facturacion. Suficientemente grandes para tener tecnologia real, suficientemente pequenas para que un solo experto pueda evaluarlas en dos semanas. Demasiado pequenas para las grandes consultoras, demasiado importantes para improvisar.">Companies with EUR 30M–400M in revenue. Big enough to have real technology, small enough that a single expert can assess it in two weeks. Too small for the big consulting firms, too important for guesswork.</p>
+      </div>
+      <div class="client-card">
+        <h3 data-en="Why Me" data-es="Por que yo">Why Me</h3>
+        <p data-en="14 years building and leading technology teams across Europe. I've been the CTO — I know what good looks like from the inside. My edge: I don't just say &laquo;this is broken,&raquo; I say &laquo;this will cost EUR 2.4M to fix, here's the 18-month plan, and the return is 3.2x.&raquo;" data-es="14 anos construyendo y liderando equipos de tecnologia en Europa. He sido CTO — se como se ve la excelencia desde dentro. Mi ventaja: no solo digo &laquo;esto esta roto,&raquo; digo &laquo;arreglar esto costara EUR 2,4M, este es el plan a 18 meses, y el retorno es 3,2x.&raquo;">14 years building and leading technology teams across Europe. I've been the CTO — I know what good looks like from the inside. My edge: I don't just say &laquo;this is broken,&raquo; I say &laquo;this will cost EUR 2.4M to fix, here's the 18-month plan, and the return is 3.2x.&raquo;</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE BUSINESS -->
+<section id="business">
+  <div class="container fade-in">
+    <h2 data-en="The Business" data-es="El negocio">The Business</h2>
+    <p class="section-lead" data-en="How I charge and what the first year looks like." data-es="Cuanto cobro y como se ve el primer ano.">How I charge and what the first year looks like.</p>
+
+    <div class="pricing-cards">
+      <div class="price-card featured">
+        <div class="price-tier" data-en="INTRODUCTORY" data-es="INTRODUCTORIO">INTRODUCTORY</div>
+        <div class="price-amount">&pound;10–15K <span data-en="per project" data-es="por proyecto">per project</span></div>
+        <p class="price-desc" data-en="Full assessment, 10 days. Lower rate in exchange for a testimonial and case study I can show future clients. This is how I build my track record." data-es="Evaluacion completa, 10 dias. Tarifa reducida a cambio de un testimonio y caso de estudio que pueda mostrar a futuros clientes. Asi es como construyo mi reputacion.">Full assessment, 10 days. Lower rate in exchange for a testimonial and case study I can show future clients. This is how I build my track record.</p>
+      </div>
+      <div class="price-card">
+        <div class="price-tier" data-en="STANDARD" data-es="ESTANDAR">STANDARD</div>
+        <div class="price-amount">&pound;15–30K <span data-en="per project" data-es="por proyecto">per project</span></div>
+        <p class="price-desc" data-en="Full assessment at market rates. 10–15 days. This is the steady-state fee once I have a track record." data-es="Evaluacion completa a precios de mercado. 10-15 dias. Esta es la tarifa habitual una vez tenga reputacion establecida.">Full assessment at market rates. 10–15 days. This is the steady-state fee once I have a track record.</p>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">PREMIUM</div>
+        <div class="price-amount">&pound;30–45K <span data-en="per project" data-es="por proyecto">per project</span></div>
+        <p class="price-desc" data-en="Assessment + improvement roadmap workshop + 90-day check-in. For investors who want ongoing support after the purchase." data-es="Evaluacion + taller de hoja de ruta de mejoras + seguimiento a 90 dias. Para inversores que quieren apoyo continuo despues de la compra.">Assessment + improvement roadmap workshop + 90-day check-in. For investors who want ongoing support after the purchase.</p>
+      </div>
+    </div>
+
+    <div class="projection">
+      <h3 data-en="Year 1 Projection" data-es="Proyeccion del ano 1">Year 1 Projection</h3>
+      <div class="proj-row">
+        <span class="proj-label" data-en="Conservative" data-es="Conservador">Conservative</span>
+        <span class="proj-value">&pound;70K</span>
+      </div>
+      <div class="proj-row highlight">
+        <span class="proj-label" data-en="Base case" data-es="Caso base">Base case</span>
+        <span class="proj-value">&pound;154K</span>
+      </div>
+      <div class="proj-row">
+        <span class="proj-label" data-en="Optimistic" data-es="Optimista">Optimistic</span>
+        <span class="proj-value">&pound;286K</span>
+      </div>
+    </div>
+
+    <div class="analogy" style="margin-top: 24px;">
+      <p data-en="These projections include income from <strong>expert network calls</strong> — investment firms also pay &pound;500–2,000/hour for phone consultations with specialists. This can generate &pound;10–30K/month even before landing full DD projects." data-es="Estas proyecciones incluyen ingresos de <strong>llamadas de redes de expertos</strong> — los fondos de inversion tambien pagan &pound;500-2.000/hora por consultas telefonicas con especialistas. Esto puede generar &pound;10-30K/mes incluso antes de conseguir proyectos completos de DD.">These projections include income from <strong>expert network calls</strong> — investment firms also pay &pound;500–2,000/hour for phone consultations with specialists. This can generate &pound;10–30K/month even before landing full DD projects.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE PLAN -->
+<section id="plan" class="section-alt">
+  <div class="container fade-in">
+    <h2 data-en="The Plan" data-es="El plan">The Plan</h2>
+    <p class="section-lead" data-en="A 36-week roadmap from April to December 2026." data-es="Una hoja de ruta de 36 semanas de abril a diciembre de 2026.">A 36-week roadmap from April to December 2026.</p>
+
+    <div class="timeline">
+      <div class="tl-item active">
+        <div class="tl-date" data-en="APR – MAY (NOW)" data-es="ABR – MAY (AHORA)">APR – MAY (NOW)</div>
+        <div class="tl-title" data-en="Preparation" data-es="Preparacion">Preparation</div>
+        <p class="tl-desc" data-en="Deepening security expertise (my biggest gap). Formalizing cost and delivery frameworks. Re-engaging warm contacts — 4 meetings already confirmed with senior PE professionals." data-es="Profundizando en seguridad (mi mayor brecha). Formalizando marcos de costes y entrega. Retomando contactos calidos — 4 reuniones ya confirmadas con profesionales senior de PE.">Deepening security expertise (my biggest gap). Formalizing cost and delivery frameworks. Re-engaging warm contacts — 4 meetings already confirmed with senior PE professionals.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date" data-en="MAY 20–21" data-es="20-21 MAY">MAY 20–21</div>
+        <div class="tl-title" data-en="London: PEI Operating Partners Forum" data-es="Londres: PEI Operating Partners Forum">London: PEI Operating Partners Forum</div>
+        <p class="tl-desc" data-en="The main industry event for PE operating partners — the people who hire advisors like me. 5+ meetings pre-scheduled." data-es="El evento principal de la industria para operating partners de PE — las personas que contratan asesores como yo. 5+ reuniones pre-agendadas.">The main industry event for PE operating partners — the people who hire advisors like me. 5+ meetings pre-scheduled.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date" data-en="JUN – AUG" data-es="JUN – AGO">JUN – AUG</div>
+        <div class="tl-title" data-en="Pipeline Building" data-es="Construyendo el pipeline">Pipeline Building</div>
+        <p class="tl-desc" data-en="Registering with expert networks (paid phone consultations). Publishing on LinkedIn 2-3x/week. Sending 20 personalised emails/month to PE funds. Target: first paid engagement." data-es="Registrandome en redes de expertos (consultas telefonicas pagadas). Publicando en LinkedIn 2-3 veces/semana. Enviando 20 emails personalizados/mes a fondos PE. Objetivo: primer proyecto pagado.">Registering with expert networks (paid phone consultations). Publishing on LinkedIn 2-3x/week. Sending 20 personalised emails/month to PE funds. Target: first paid engagement.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date" data-en="SEP 9–10" data-es="9-10 SEP">SEP 9–10</div>
+        <div class="tl-title" data-en="London: UK Private Capital Summit" data-es="Londres: UK Private Capital Summit">London: UK Private Capital Summit</div>
+        <p class="tl-desc" data-en="Second major event. By now, aiming for 20+ qualified conversations, 5+ discovery calls, and 1+ paid engagement completed." data-es="Segundo evento importante. Para entonces, objetivo de 20+ conversaciones cualificadas, 5+ llamadas de descubrimiento y 1+ proyecto pagado completado.">Second major event. By now, aiming for 20+ qualified conversations, 5+ discovery calls, and 1+ paid engagement completed.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date" data-en="NOV 4–7" data-es="4-7 NOV">NOV 4–7</div>
+        <div class="tl-title" data-en="Amsterdam: SuperReturn Europe" data-es="Amsterdam: SuperReturn Europe">Amsterdam: SuperReturn Europe</div>
+        <p class="tl-desc" data-en="The largest PE conference in Europe. Target by year-end: 2+ completed DD projects, 5+ referral partners, first case study published." data-es="La mayor conferencia de PE en Europa. Objetivo para fin de ano: 2+ proyectos de DD completados, 5+ socios de referencia, primer caso de estudio publicado.">The largest PE conference in Europe. Target by year-end: 2+ completed DD projects, 5+ referral partners, first case study published.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p style="margin-bottom: 6px; color: var(--text-secondary);" data-en="Based in Madrid. Working across Europe." data-es="Basado en Madrid. Trabajando en toda Europa.">Based in Madrid. Working across Europe.</p>
+    <p data-en="Made for Mum & Dad &middot; April 2026" data-es="Hecho para Mama y Papa &middot; Abril 2026">Made for Mum & Dad &middot; April 2026</p>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  // Nav menu toggle
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('navMenu');
+  toggle.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+  });
+
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle.classList.remove('open');
+    });
+  });
+
+  // Dimension card accordion
+  document.querySelectorAll('[data-dim]').forEach(card => {
+    card.addEventListener('click', () => {
+      const wasExpanded = card.classList.contains('expanded');
+      document.querySelectorAll('[data-dim]').forEach(c => c.classList.remove('expanded'));
+      if (!wasExpanded) card.classList.add('expanded');
+    });
+  });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Language toggle
+  let currentLang = 'en';
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      if (lang === currentLang) return;
+      currentLang = lang;
+
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = text;
+        } else {
+          el.innerHTML = text;
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
