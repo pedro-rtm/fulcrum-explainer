@@ -29,7 +29,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html {
-      scroll-behavior: smooth;
       -webkit-text-size-adjust: 100%;
     }
 
@@ -1093,11 +1092,29 @@
     toggle.classList.toggle('open', open);
   });
 
+  // Smooth scroll for anchor links only
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
   menu.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       menu.classList.remove('open');
       toggle.classList.remove('open');
     });
+  });
+
+  // On back navigation, skip fade-in animations so scroll position restores correctly
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+    }
   });
 
   // Dimension card accordion
