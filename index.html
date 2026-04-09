@@ -593,6 +593,95 @@
       background: var(--copper);
       color: #fff;
     }
+
+    /* ---- READ MORE LINKS ---- */
+    .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--copper);
+      text-decoration: none;
+      border: 1px solid var(--copper-border);
+      border-radius: 20px;
+      transition: all 0.2s ease-out;
+    }
+
+    .read-more:hover {
+      background: var(--copper-bg);
+      border-color: var(--copper);
+    }
+
+    .read-more svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .read-more-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .read-more-group .read-more { margin-top: 0; }
+
+    /* ---- DOCS GRID ---- */
+    .docs-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .doc-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease-out;
+    }
+
+    .doc-link:hover {
+      border-color: var(--copper-border);
+      box-shadow: var(--shadow);
+    }
+
+    .doc-link-icon {
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .doc-link-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .doc-link-text h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 1px;
+    }
+
+    .doc-link-text p {
+      font-size: 12px;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .doc-link-arrow {
+      flex-shrink: 0;
+      color: var(--text-light);
+    }
   </style>
 </head>
 <body>
@@ -615,6 +704,7 @@
     <a href="#clients" data-en="Who Hires Me" data-es="Quien me contrata">Who Hires Me</a>
     <a href="#business" data-en="The Business" data-es="El negocio">The Business</a>
     <a href="#plan" data-en="The Plan" data-es="El plan">The Plan</a>
+    <a href="doc.html" data-en="Full Documents" data-es="Documentos completos">Full Documents</a>
   </div>
 </nav>
 
@@ -649,6 +739,11 @@
     </div>
 
     <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.55;" data-en="These investment firms — called Private Equity (PE) funds — buy companies worth tens or hundreds of millions of euros. A bad technology decision could cost them millions. They need an independent expert who can cut through the sales pitch and give them the truth." data-es="Estos fondos de inversion — llamados fondos de Private Equity (PE) — compran empresas que valen decenas o cientos de millones de euros. Una mala decision tecnologica les puede costar millones. Necesitan un experto independiente que vaya mas alla del discurso comercial y les diga la verdad.">These investment firms — called Private Equity (PE) funds — buy companies worth tens or hundreds of millions of euros. A bad technology decision could cost them millions. They need an independent expert who can cut through the sales pitch and give them the truth.</p>
+
+    <a href="doc.html?file=strategy.md" class="read-more" data-en="Read full strategy" data-es="Leer estrategia completa">
+      Read full strategy
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+    </a>
   </div>
 </section>
 
@@ -688,6 +783,11 @@
         </div>
       </div>
     </div>
+
+    <a href="doc.html?file=report-template.md" class="read-more" data-en="See the full report template" data-es="Ver la plantilla del informe">
+      See the full report template
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+    </a>
   </div>
 </section>
 
@@ -775,6 +875,17 @@
         </div>
       </div>
     </div>
+
+    <div class="read-more-group">
+      <a href="doc.html?file=methodology.md" class="read-more" data-en="Full methodology" data-es="Metodologia completa">
+        Full methodology
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="docs/sample-report.pdf" target="_blank" class="read-more" data-en="Sample report (PDF)" data-es="Informe ejemplo (PDF)">
+        Sample report (PDF)
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -798,6 +909,11 @@
         <p data-en="14 years building and leading technology teams across Europe. I've been the CTO — I know what good looks like from the inside. My edge: I don't just say &laquo;this is broken,&raquo; I say &laquo;this will cost EUR 2.4M to fix, here's the 18-month plan, and the return is 3.2x.&raquo;" data-es="14 anos construyendo y liderando equipos de tecnologia en Europa. He sido CTO — se como se ve la excelencia desde dentro. Mi ventaja: no solo digo &laquo;esto esta roto,&raquo; digo &laquo;arreglar esto costara EUR 2,4M, este es el plan a 18 meses, y el retorno es 3,2x.&raquo;">14 years building and leading technology teams across Europe. I've been the CTO — I know what good looks like from the inside. My edge: I don't just say &laquo;this is broken,&raquo; I say &laquo;this will cost EUR 2.4M to fix, here's the 18-month plan, and the return is 3.2x.&raquo;</p>
       </div>
     </div>
+
+    <a href="doc.html?file=lead-generation.md" class="read-more" data-en="Full go-to-market plan" data-es="Plan comercial completo">
+      Full go-to-market plan
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+    </a>
   </div>
 </section>
 
@@ -844,6 +960,11 @@
     <div class="analogy" style="margin-top: 24px;">
       <p data-en="These projections include income from <strong>expert network calls</strong> — investment firms also pay &pound;500–2,000/hour for phone consultations with specialists. This can generate &pound;10–30K/month even before landing full DD projects." data-es="Estas proyecciones incluyen ingresos de <strong>llamadas de redes de expertos</strong> — los fondos de inversion tambien pagan &pound;500-2.000/hora por consultas telefonicas con especialistas. Esto puede generar &pound;10-30K/mes incluso antes de conseguir proyectos completos de DD.">These projections include income from <strong>expert network calls</strong> — investment firms also pay &pound;500–2,000/hour for phone consultations with specialists. This can generate &pound;10–30K/month even before landing full DD projects.</p>
     </div>
+
+    <a href="doc.html?file=pricing.md" class="read-more" data-en="Full pricing breakdown" data-es="Desglose completo de precios">
+      Full pricing breakdown
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+    </a>
   </div>
 </section>
 
@@ -879,6 +1000,77 @@
         <div class="tl-title" data-en="Amsterdam: SuperReturn Europe" data-es="Amsterdam: SuperReturn Europe">Amsterdam: SuperReturn Europe</div>
         <p class="tl-desc" data-en="The largest PE conference in Europe. Target by year-end: 2+ completed DD projects, 5+ referral partners, first case study published." data-es="La mayor conferencia de PE en Europa. Objetivo para fin de ano: 2+ proyectos de DD completados, 5+ socios de referencia, primer caso de estudio publicado.">The largest PE conference in Europe. Target by year-end: 2+ completed DD projects, 5+ referral partners, first case study published.</p>
       </div>
+    </div>
+
+    <div class="read-more-group">
+      <a href="doc.html?file=action-plan.md" class="read-more" data-en="Full 36-week plan" data-es="Plan completo de 36 semanas">
+        Full 36-week plan
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=learning-syllabus.md" class="read-more" data-en="Learning syllabus" data-es="Plan de estudios">
+        Learning syllabus
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=gap-analysis.md" class="read-more" data-en="Knowledge gap analysis" data-es="Analisis de brechas">
+        Knowledge gap analysis
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ALL DOCUMENTS -->
+<section id="docs">
+  <div class="container fade-in">
+    <h2 data-en="All Documents" data-es="Todos los documentos">All Documents</h2>
+    <p class="section-lead" data-en="The complete strategy, methodology, and execution plan." data-es="La estrategia completa, metodologia y plan de ejecucion.">The complete strategy, methodology, and execution plan.</p>
+
+    <div class="docs-grid">
+      <a href="doc.html?file=strategy.md" class="doc-link">
+        <span class="doc-link-icon">&#127919;</span>
+        <div class="doc-link-text"><h3>Strategy & Positioning</h3><p data-en="Master strategy, competitive landscape, brand" data-es="Estrategia maestra, panorama competitivo, marca">Master strategy, competitive landscape, brand</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=methodology.md" class="doc-link">
+        <span class="doc-link-icon">&#128209;</span>
+        <div class="doc-link-text"><h3>DD Methodology Framework</h3><p data-en="7-dimension assessment, scoring, deliverables" data-es="Evaluacion de 7 dimensiones, puntuacion, entregables">7-dimension assessment, scoring, deliverables</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=learning-syllabus.md" class="doc-link">
+        <span class="doc-link-icon">&#128218;</span>
+        <div class="doc-link-text"><h3>Learning Syllabus</h3><p data-en="108-190 hours of study, DD-ready in 10 weeks" data-es="108-190 horas de estudio, listo para DD en 10 semanas">108-190 hours of study, DD-ready in 10 weeks</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=gap-analysis.md" class="doc-link">
+        <span class="doc-link-icon">&#128200;</span>
+        <div class="doc-link-text"><h3>Knowledge Gap Analysis</h3><p data-en="Honest self-assessment across all 7 dimensions" data-es="Autoevaluacion honesta en las 7 dimensiones">Honest self-assessment across all 7 dimensions</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=action-plan.md" class="doc-link">
+        <span class="doc-link-icon">&#128197;</span>
+        <div class="doc-link-text"><h3>Weekly Action Plan</h3><p data-en="36-week roadmap, week by week" data-es="Hoja de ruta de 36 semanas, semana a semana">36-week roadmap, week by week</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=pricing.md" class="doc-link">
+        <span class="doc-link-icon">&#128176;</span>
+        <div class="doc-link-text"><h3>Pricing Strategy</h3><p data-en="Market benchmarks, tiers, Year 1 model" data-es="Benchmarks de mercado, tiers, modelo del ano 1">Market benchmarks, tiers, Year 1 model</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=lead-generation.md" class="doc-link">
+        <span class="doc-link-icon">&#128640;</span>
+        <div class="doc-link-text"><h3>Lead Generation Plan</h3><p data-en="6-layer go-to-market strategy" data-es="Estrategia comercial de 6 capas">6-layer go-to-market strategy</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="doc.html?file=report-template.md" class="doc-link">
+        <span class="doc-link-icon">&#128196;</span>
+        <div class="doc-link-text"><h3>DD Report Template</h3><p data-en="The deliverable structure investors receive" data-es="La estructura del entregable que reciben los inversores">The deliverable structure investors receive</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
+      <a href="docs/sample-report.pdf" target="_blank" class="doc-link">
+        <span class="doc-link-icon">&#128462;</span>
+        <div class="doc-link-text"><h3>Sample DD Report (PDF)</h3><p data-en="Illustrative report — what the investor gets" data-es="Informe ilustrativo — lo que recibe el inversor">Illustrative report — what the investor gets</p></div>
+        <svg class="doc-link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+      </a>
     </div>
   </div>
 </section>

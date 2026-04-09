@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fulcrum — Sample Technology Due Diligence Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  @page {
+    size: A4;
+    margin: 20mm 22mm 20mm 22mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 9pt;
+    line-height: 1.5;
+    color: #1a1e2e;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Page breaks */
+  .page-break { page-break-before: always; }
+
+  /* Headings */
+  h1 {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 22pt;
+    font-weight: 400;
+    line-height: 1.15;
+    color: #1a1e2e;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 14pt;
+    font-weight: 400;
+    color: #1a1e2e;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 9.5pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #3d4255;
+    margin-top: 14px;
+    margin-bottom: 6px;
+  }
+
+  p {
+    margin-bottom: 8px;
+    color: #3d4255;
+    max-width: 80ch;
+  }
+
+  /* Accent */
+  .accent { color: #8b4049; }
+  .accent-bg { background: rgba(139, 64, 73, 0.06); }
+  .alert { color: #b45309; }
+  .go { color: #166534; }
+  .critical { color: #dc2626; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 14px;
+    font-size: 8.5pt;
+  }
+
+  th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #6b7280;
+    padding: 5px 8px;
+    border-bottom: 2px solid #ddd;
+    background: #f9f7f4;
+  }
+
+  td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+  }
+
+  tr.total td {
+    font-weight: 600;
+    border-top: 2px solid #ccc;
+    border-bottom: none;
+  }
+
+  /* Score bars */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+  }
+
+  .score-label {
+    width: 140px;
+    font-size: 8.5pt;
+    color: #3d4255;
+  }
+
+  .score-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+  }
+
+  .score-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: #8b4049;
+  }
+
+  .score-bar--alert { background: #b45309; }
+  .score-bar--critical { background: #dc2626; }
+  .score-bar--good { background: #166534; }
+
+  .score-val {
+    width: 35px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 8.5pt;
+  }
+
+  /* Cover */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 240mm;
+    padding: 40mm 0;
+  }
+
+  .cover-brand {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 28pt;
+    color: #1a1e2e;
+    margin-bottom: 40px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #8b4049;
+    display: inline-block;
+  }
+
+  .cover-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 18pt;
+    color: #3d4255;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+
+  .cover-subtitle {
+    font-size: 11pt;
+    color: #6b7280;
+    margin-bottom: 40px;
+  }
+
+  .cover-meta {
+    font-size: 9pt;
+    color: #6b7280;
+    line-height: 1.8;
+  }
+
+  .cover-meta strong { color: #1a1e2e; }
+
+  .cover-watermark {
+    margin-top: 40px;
+    padding: 10px 14px;
+    background: rgba(139, 64, 73, 0.06);
+    border-left: 3px solid #8b4049;
+    font-size: 8.5pt;
+    color: #8b4049;
+    font-weight: 500;
+  }
+
+  /* Verdict box */
+  .verdict-box {
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+
+  .verdict-go {
+    background: rgba(22, 101, 52, 0.06);
+    border-left: 3px solid #166534;
+  }
+
+  .verdict-label {
+    font-size: 8pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .verdict-text {
+    font-size: 9pt;
+    line-height: 1.55;
+  }
+
+  /* Key finding boxes */
+  .finding {
+    padding: 8px 12px;
+    margin: 6px 0;
+    background: #f9f7f4;
+    border-left: 3px solid #ddd;
+  }
+
+  .finding--risk { border-left-color: #b45309; }
+  .finding--opportunity { border-left-color: #166534; }
+
+  .finding-title {
+    font-weight: 600;
+    font-size: 8.5pt;
+    margin-bottom: 2px;
+  }
+
+  .finding-desc {
+    font-size: 8.5pt;
+    color: #6b7280;
+  }
+
+  /* Footer */
+  .page-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 22mm;
+    font-size: 7pt;
+    color: #9ca3af;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    padding-top: 6px;
+  }
+
+  /* Lists */
+  ul {
+    margin: 6px 0 10px 16px;
+    font-size: 8.5pt;
+    color: #3d4255;
+  }
+
+  li { margin-bottom: 3px; }
+
+  /* Inline code */
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt;
+    background: #f3f0eb;
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+
+  /* Two column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-brand">Fulcrum</div>
+  <div class="cover-title">Technology Due Diligence Report</div>
+  <div class="cover-subtitle">Prepared for Illustrative Purposes</div>
+
+  <div class="cover-meta">
+    <strong>Target:</strong> Meridian Software Ltd<br>
+    <strong>Sector:</strong> B2B SaaS &mdash; Logistics & Supply Chain<br>
+    <strong>Revenue (LTM):</strong> &pound;18.2M<br>
+    <strong>Employees:</strong> 142<br>
+    <strong>Prepared for:</strong> [PE Fund Name]<br>
+    <strong>Date:</strong> April 2026<br>
+    <strong>Assessment period:</strong> 10 working days<br>
+  </div>
+
+  <div class="cover-watermark">
+    ILLUSTRATIVE SAMPLE &mdash; This report uses a fictional company to demonstrate the Fulcrum assessment methodology, deliverable format, and depth of analysis. All data is fabricated for demonstration purposes.
+  </div>
+</div>
+
+<!-- ============ EXECUTIVE SUMMARY ============ -->
+<div class="page-break"></div>
+
+<h1>1. Executive Summary</h1>
+
+<p>Meridian Software Ltd operates a B2B SaaS platform for logistics route optimisation and warehouse management, serving 340+ enterprise clients across the UK and DACH region. The platform processes ~2.1M daily API calls and manages &pound;4.2B in annual freight value for its clients.</p>
+
+<h3>Overall Assessment</h3>
+
+<div style="margin: 12px 0 16px;">
+  <div class="score-row">
+    <span class="score-label">Architecture</span>
+    <div class="score-bar-bg"><div class="score-bar" style="width: 80%;"></div></div>
+    <span class="score-val">4/5</span>
+  </div>
+  <div class="score-row">
+    <span class="score-label">Team & Organisation</span>
+    <div class="score-bar-bg"><div class="score-bar" style="width: 60%;"></div></div>
+    <span class="score-val">3/5</span>
+  </div>
+  <div class="score-row">
+    <span class="score-label" style="color: #b45309; font-weight: 600;">Security & Compliance</span>
+    <div class="score-bar-bg"><div class="score-bar score-bar--alert" style="width: 40%;"></div></div>
+    <span class="score-val alert">2/5</span>
+  </div>
+  <div class="score-row">
+    <span class="score-label">Data & Analytics</span>
+    <div class="score-bar-bg"><div class="score-bar" style="width: 60%;"></div></div>
+    <span class="score-val">3/5</span>
+  </div>
+  <div class="score-row">
+    <span class="score-label">Cost Structure</span>
+    <div class="score-bar-bg"><div class="score-bar" style="width: 80%;"></div></div>
+    <span class="score-val">4/5</span>
+  </div>
+  <div class="score-row">
+    <span class="score-label">Delivery Capability</span>
+    <div class="score-bar-bg"><div class="score-bar score-bar--good" style="width: 80%;"></div></div>
+    <span class="score-val go">4/5</span>
+  </div>
+  <div class="score-row">
+    <span class="score-label">Strategic Alignment</span>
+    <div class="score-bar-bg"><div class="score-bar" style="width: 60%;"></div></div>
+    <span class="score-val">3/5</span>
+  </div>
+  <div class="score-row" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #ddd;">
+    <span class="score-label" style="font-weight: 600;">Composite</span>
+    <div class="score-bar-bg"><div class="score-bar" style="width: 66%;"></div></div>
+    <span class="score-val" style="font-size: 9.5pt;">3.3/5</span>
+  </div>
+</div>
+
+<h3>Top 3 Risks</h3>
+
+<div class="finding finding--risk">
+  <div class="finding-title">1. Security posture: SOC 2 non-compliant, 3 critical CVEs unpatched</div>
+  <div class="finding-desc">No SOC 2 Type II. Penetration test (Nov 2025) identified 3 critical and 8 high-severity vulnerabilities. IAM relies on shared service accounts for production database access. Estimated remediation: &pound;285K over 6 months.</div>
+</div>
+
+<div class="finding finding--risk">
+  <div class="finding-title">2. Key-person dependency: 2 engineers hold 68% of core routing engine knowledge</div>
+  <div class="finding-desc">The route optimisation algorithm (Meridian's core IP) was built by two senior engineers who have been with the company since founding. No documentation. No tests on critical paths. Bus factor = 2. Mitigation requires &pound;120K investment in documentation, pair programming, and knowledge transfer over 4 months.</div>
+</div>
+
+<div class="finding finding--risk">
+  <div class="finding-title">3. Architecture scalability ceiling at ~3.8x current load</div>
+  <div class="finding-desc">The monolithic API handles 2.1M daily calls on vertically-scaled AWS instances. Horizontal scaling is not supported without architectural refactoring. At the value creation plan's projected growth rate, the ceiling is reached in Month 18. Refactoring estimate: &pound;440K over 12 months.</div>
+</div>
+
+<h3>Top 3 Value Creation Opportunities</h3>
+
+<div class="finding finding--opportunity">
+  <div class="finding-title">1. Cloud cost optimisation: &pound;210K annual savings (currently 2.3x industry benchmark)</div>
+  <div class="finding-desc">AWS spend is &pound;68K/month (&pound;816K/year). Industry benchmark for this revenue band: &pound;25K&ndash;30K/month. Key drivers: oversized RDS instances, no reserved capacity, 40% of S3 storage is orphaned data. 60-day implementation.</div>
+</div>
+
+<div class="finding finding--opportunity">
+  <div class="finding-title">2. AI-powered route optimisation: &pound;2.1M incremental ARR opportunity</div>
+  <div class="finding-desc">Current routing algorithm is rule-based (2019 vintage). ML-based routing using existing data could improve accuracy by 12&ndash;18%, enabling premium tier pricing. Data quality is sufficient. Estimated build: &pound;380K over 9 months. Payback: 7 months.</div>
+</div>
+
+<div class="finding finding--opportunity">
+  <div class="finding-title">3. Data monetisation: benchmark dataset across 340+ logistics operators</div>
+  <div class="finding-desc">Meridian processes routing and cost data from 340+ logistics companies. This dataset has intrinsic value as an industry benchmark product (fuel cost trends, route efficiency comparisons, seasonal patterns). Estimated development: &pound;180K. Potential ARR: &pound;600K&ndash;1.2M within 24 months.</div>
+</div>
+
+<h3>Recommendation</h3>
+
+<div class="verdict-box verdict-go">
+  <div class="verdict-label go">Recommendation: Go with conditions</div>
+  <div class="verdict-text">
+    Technology supports the investment thesis at current scale. Three material conditions: (1) security remediation must begin within 30 days of close (&pound;285K), (2) key-person risk mitigation plan required as Day 1 priority, (3) architecture refactoring must be budgeted in the value creation plan (&pound;440K, Month 3&ndash;15). Total cost-to-fix: &pound;1.84M over 24 months. Recommended price adjustment: &pound;1.2M (net of cloud savings in Year 1).
+  </div>
+</div>
+
+<h3>Cost-to-Fix Summary</h3>
+
+<table>
+  <thead>
+    <tr><th>Phase</th><th>Initiatives</th><th>Investment</th><th>Timeline</th><th>Expected ROI</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>P1: Quick wins</td><td>Cloud cost reset, security patching, IAM hardening</td><td>&pound;295K</td><td>0&ndash;3 months</td><td>3.8x (Year 1)</td></tr>
+    <tr><td>P2: Foundation</td><td>SOC 2 programme, knowledge transfer, data governance</td><td>&pound;665K</td><td>3&ndash;12 months</td><td>2.4x</td></tr>
+    <tr><td>P3: Growth enablement</td><td>Architecture refactoring, ML routing, benchmark product</td><td>&pound;880K</td><td>12&ndash;24 months</td><td>4.1x</td></tr>
+    <tr class="total"><td>Total</td><td>9 initiatives</td><td>&pound;1.84M</td><td>24 months</td><td>3.2x blended</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ SECTION 2: COMPANY PROFILE ============ -->
+<div class="page-break"></div>
+
+<h1>2. Company Technology Profile</h1>
+
+<table>
+  <thead><tr><th>Field</th><th>Detail</th></tr></thead>
+  <tbody>
+    <tr><td>Company</td><td>Meridian Software Ltd</td></tr>
+    <tr><td>Sector</td><td>B2B SaaS &mdash; Logistics & Supply Chain</td></tr>
+    <tr><td>Founded</td><td>2017 (Birmingham, UK)</td></tr>
+    <tr><td>Revenue (LTM)</td><td>&pound;18.2M (92% recurring)</td></tr>
+    <tr><td>ARR growth</td><td>34% YoY</td></tr>
+    <tr><td>Employees</td><td>142 total (38 engineering, 12 product, 92 commercial/ops)</td></tr>
+    <tr><td>Clients</td><td>340+ enterprise accounts, 94% UK/DACH</td></tr>
+    <tr><td>Daily API calls</td><td>~2.1M</td></tr>
+    <tr><td>Core product</td><td>Route optimisation + warehouse management SaaS</td></tr>
+    <tr><td>Cloud provider</td><td>AWS (eu-west-2, London region)</td></tr>
+    <tr><td>Annual tech spend</td><td>&pound;4.1M (22.5% of revenue)</td></tr>
+  </tbody>
+</table>
+
+<h3>Technology Stack</h3>
+
+<table>
+  <thead><tr><th>Layer</th><th>Systems</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Frontend</td><td>React 18, TypeScript, Next.js</td><td>Modern, well-maintained</td></tr>
+    <tr><td>Backend</td><td>Python (Django), Node.js microservices</td><td>Monolith (Django) + 4 microservices (Node)</td></tr>
+    <tr><td>Database</td><td>PostgreSQL (RDS), Redis, Elasticsearch</td><td>RDS oversized (see Cost section)</td></tr>
+    <tr><td>Infrastructure</td><td>AWS EC2, RDS, S3, CloudFront, SQS</td><td>No IaC. Manual deployments to production</td></tr>
+    <tr><td>CI/CD</td><td>GitHub Actions</td><td>Automated for staging, manual for prod</td></tr>
+    <tr><td>Monitoring</td><td>Datadog (basic tier)</td><td>APM not configured. Alerting gaps</td></tr>
+    <tr><td>CRM</td><td>HubSpot</td><td>Well-integrated</td></tr>
+    <tr><td>Analytics</td><td>Metabase (self-hosted)</td><td>Limited adoption. Most reporting is manual</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ SECTION 3: ARCHITECTURE ============ -->
+<div class="page-break"></div>
+
+<h1>3. Architecture & Infrastructure</h1>
+<p><strong>Score: 4/5 (Good)</strong> &mdash; Modern stack with solid fundamentals. Key concern: monolithic API limits horizontal scaling.</p>
+
+<h3>Current Architecture</h3>
+<p>Meridian runs a hybrid architecture: a Django monolith handling the core routing engine and client API, plus four Node.js microservices (notifications, billing, data export, webhook relay). All services run on AWS EC2 in eu-west-2 (London). The frontend is a React/Next.js application served via CloudFront.</p>
+
+<h3>Technical Debt Inventory</h3>
+<table>
+  <thead><tr><th>Item</th><th>Severity</th><th>Remediation cost</th><th>Timeline</th></tr></thead>
+  <tbody>
+    <tr><td>Monolith API: no horizontal scaling</td><td class="alert">High</td><td>&pound;440K</td><td>12 months</td></tr>
+    <tr><td>No Infrastructure as Code</td><td class="alert">High</td><td>&pound;60K</td><td>2 months</td></tr>
+    <tr><td>Manual production deployments</td><td>Medium</td><td>&pound;35K</td><td>1 month</td></tr>
+    <tr><td>Python 3.9 (EOL Dec 2025)</td><td>Medium</td><td>&pound;25K</td><td>3 weeks</td></tr>
+    <tr><td>Orphaned S3 buckets (2.4TB)</td><td>Low</td><td>&pound;5K</td><td>1 week</td></tr>
+    <tr class="total"><td>Total technical debt</td><td></td><td>&pound;565K</td><td></td></tr>
+  </tbody>
+</table>
+
+<h3>Scalability Assessment</h3>
+<p>Current architecture handles 2.1M daily API calls on two vertically-scaled EC2 instances (r5.4xlarge). Load testing indicates the ceiling at approximately 8M daily calls (~3.8x current). At the value creation plan's projected 40% annual growth, this ceiling is reached in approximately Month 18. Horizontal scaling requires extracting the routing engine from the Django monolith into a dedicated service with stateless request handling.</p>
+
+<h3>Single Points of Failure</h3>
+<table>
+  <thead><tr><th>SPOF</th><th>Impact if failure</th><th>Current mitigation</th></tr></thead>
+  <tbody>
+    <tr><td>Primary RDS instance</td><td>Full platform outage</td><td>Multi-AZ failover (automated, tested quarterly)</td></tr>
+    <tr><td>Routing engine EC2</td><td>API unavailable</td><td>Auto-scaling group (2 instances), but no cross-AZ</td></tr>
+    <tr><td>Redis cache</td><td>Degraded performance (10x latency)</td><td>ElastiCache single-node. No replication</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ SECTION 4: TEAM ============ -->
+<div class="page-break"></div>
+
+<h1>4. Team & Organisation</h1>
+<p><strong>Score: 3/5 (Moderate)</strong> &mdash; Capable team with critical key-person risk. Engineering management layer is thin.</p>
+
+<h3>Engineering Composition</h3>
+<table>
+  <thead><tr><th>Role</th><th>Headcount</th><th>In-house</th><th>Outsourced</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Backend</td><td>14</td><td>10</td><td>4</td><td>Outsourced via Polish agency (2-year relationship)</td></tr>
+    <tr><td>Frontend</td><td>8</td><td>8</td><td>0</td><td>Strong React team</td></tr>
+    <tr><td>DevOps / Infra</td><td>3</td><td>3</td><td>0</td><td>Understaffed for platform complexity</td></tr>
+    <tr><td>Data / ML</td><td>2</td><td>2</td><td>0</td><td>Recent hires (< 6 months tenure)</td></tr>
+    <tr><td>QA</td><td>4</td><td>2</td><td>2</td><td>Manual testing predominant</td></tr>
+    <tr><td>Engineering management</td><td>3</td><td>3</td><td>0</td><td>VP Eng + 2 team leads. No dedicated architect</td></tr>
+    <tr><td>Product</td><td>4</td><td>4</td><td>0</td><td>CPO + 3 PMs</td></tr>
+    <tr class="total"><td>Total</td><td>38</td><td>32</td><td>6</td><td>84% in-house</td></tr>
+  </tbody>
+</table>
+
+<h3>Key-Person Risk Assessment</h3>
+<table>
+  <thead><tr><th>Person</th><th>Role</th><th>Risk</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr><td>James Chen</td><td>Principal Engineer (routing)</td><td class="critical" style="font-weight:600;">Critical</td><td>Co-architect of routing engine. Only person who understands the constraint solver. No documentation.</td></tr>
+    <tr><td>Sarah Kovacs</td><td>Senior Engineer (routing)</td><td class="critical" style="font-weight:600;">Critical</td><td>Second routing expert. Together with Chen, holds 68% of core IP knowledge. No succession plan.</td></tr>
+    <tr><td>Marcus Webb</td><td>VP Engineering</td><td class="alert" style="font-weight:600;">High</td><td>All architecture decisions route through Marcus. No deputy. Hiring authority bottleneck.</td></tr>
+  </tbody>
+</table>
+
+<p><strong>Mitigation recommendation:</strong> Immediate documentation sprint (4 weeks, &pound;40K). Pair programming programme between Chen/Kovacs and two mid-level engineers (ongoing). Recruit a dedicated Solutions Architect to reduce VP Eng bottleneck (&pound;80K/year).</p>
+
+<!-- ============ SECTION 5: SECURITY ============ -->
+<div class="page-break"></div>
+
+<h1>5. Security & Compliance</h1>
+<p><strong class="alert">Score: 2/5 (Significant)</strong> &mdash; Material gaps across compliance, vulnerability management, and access controls. This is the primary risk dimension.</p>
+
+<h3>Compliance Status</h3>
+<table>
+  <thead><tr><th>Standard</th><th>Status</th><th>Gap</th><th>Remediation cost</th></tr></thead>
+  <tbody>
+    <tr><td>SOC 2 Type II</td><td class="critical" style="font-weight:600;">Not started</td><td>Full programme required. Estimated 6&ndash;9 month timeline to certification.</td><td>&pound;180K</td></tr>
+    <tr><td>GDPR</td><td class="alert" style="font-weight:600;">Partial</td><td>Privacy policy compliant. Data processing agreements missing for 3 sub-processors. No DPIA completed.</td><td>&pound;25K</td></tr>
+    <tr><td>ISO 27001</td><td>Not started</td><td>Not required for current client base but increasingly requested in enterprise RFPs.</td><td>&pound;120K</td></tr>
+  </tbody>
+</table>
+
+<h3>Vulnerability Assessment</h3>
+<p>External penetration test conducted November 2025 by NCC Group. Key findings:</p>
+<table>
+  <thead><tr><th>Severity</th><th>Count</th><th>Status</th><th>Examples</th></tr></thead>
+  <tbody>
+    <tr><td class="critical" style="font-weight:600;">Critical</td><td>3</td><td class="critical">Unpatched</td><td>SQL injection in legacy reporting endpoint, exposed AWS credentials in client-facing error messages, unauthenticated admin API endpoint</td></tr>
+    <tr><td class="alert" style="font-weight:600;">High</td><td>8</td><td class="alert">3 patched, 5 open</td><td>Weak session management, missing CSRF tokens, outdated TLS configuration</td></tr>
+    <tr><td>Medium</td><td>12</td><td>7 patched, 5 open</td><td>Information disclosure, verbose error messages, missing security headers</td></tr>
+  </tbody>
+</table>
+
+<h3>Identity & Access Management</h3>
+<ul>
+  <li><strong>Production database:</strong> 4 shared service accounts with full read/write access. No individual credentials. No audit logging on database queries.</li>
+  <li><strong>AWS console:</strong> 8 IAM users, 3 with admin privileges. MFA enabled for 5 of 8 users.</li>
+  <li><strong>Application:</strong> Role-based access control implemented. SSO via Google Workspace. Adequate.</li>
+</ul>
+
+<p><strong>Immediate action required:</strong> Patch 3 critical CVEs within 7 days of close. Revoke shared database credentials and implement individual access with audit logging within 30 days. Enable MFA for all AWS IAM users immediately.</p>
+
+<!-- ============ SECTION 6: COST ============ -->
+<div class="page-break"></div>
+
+<h1>6. Cost Structure</h1>
+<p><strong>Score: 4/5 (Good)</strong> &mdash; Total tech spend is within range, but cloud costs are 2.3x industry benchmark. Significant optimisation opportunity.</p>
+
+<h3>Annual Technology Spend</h3>
+<table>
+  <thead><tr><th>Category</th><th>Annual (GBP)</th><th>% of total</th><th>Benchmark</th><th>Assessment</th></tr></thead>
+  <tbody>
+    <tr><td>Engineering salaries</td><td>&pound;2,280K</td><td>55.6%</td><td>50&ndash;60%</td><td style="color:#166534;">Within range</td></tr>
+    <tr><td>Cloud infrastructure (AWS)</td><td>&pound;816K</td><td>19.9%</td><td>8&ndash;12%</td><td class="alert" style="font-weight:600;">2.3x benchmark</td></tr>
+    <tr><td>SaaS licences</td><td>&pound;340K</td><td>8.3%</td><td>6&ndash;10%</td><td style="color:#166534;">Within range</td></tr>
+    <tr><td>Outsourced development</td><td>&pound;420K</td><td>10.2%</td><td>5&ndash;15%</td><td style="color:#166534;">Within range</td></tr>
+    <tr><td>Other (hardware, travel, training)</td><td>&pound;244K</td><td>6.0%</td><td>3&ndash;8%</td><td style="color:#166534;">Within range</td></tr>
+    <tr class="total"><td>Total</td><td>&pound;4,100K</td><td>100%</td><td></td><td>22.5% of revenue</td></tr>
+  </tbody>
+</table>
+
+<p>Tech spend as percentage of revenue (22.5%) is slightly above the 18&ndash;22% benchmark for B2B SaaS companies at this revenue level (Gartner, 2025). The variance is driven entirely by cloud infrastructure overspend.</p>
+
+<h3>Cloud Cost Optimisation</h3>
+<table>
+  <thead><tr><th>Initiative</th><th>Current annual</th><th>Optimised</th><th>Savings</th><th>Effort</th></tr></thead>
+  <tbody>
+    <tr><td>RDS right-sizing (r5.4xl &rarr; r5.2xl)</td><td>&pound;186K</td><td>&pound;93K</td><td>&pound;93K</td><td>1 day</td></tr>
+    <tr><td>Reserved instances (1-year, all-upfront)</td><td>&pound;420K</td><td>&pound;294K</td><td>&pound;126K</td><td>1 week</td></tr>
+    <tr><td>S3 lifecycle + orphan cleanup (2.4TB)</td><td>&pound;38K</td><td>&pound;12K</td><td>&pound;26K</td><td>2 days</td></tr>
+    <tr><td>Dev/staging environment scheduling</td><td>&pound;96K</td><td>&pound;38K</td><td>&pound;58K</td><td>1 week</td></tr>
+    <tr class="total"><td>Total cloud savings</td><td>&pound;740K</td><td>&pound;437K</td><td>&pound;303K</td><td>~3 weeks</td></tr>
+  </tbody>
+</table>
+
+<p><strong>&pound;303K annual savings achievable within 60 days. No engineering risk. No product impact.</strong> This is the single highest-ROI quick win in this assessment.</p>
+
+<!-- ============ SECTION 7: VALUE CREATION ============ -->
+<div class="page-break"></div>
+
+<h1>7. Value Creation Roadmap</h1>
+
+<h3>90-Day Plan (Post-Close)</h3>
+<table>
+  <thead><tr><th>Week</th><th>Action</th><th>Owner</th><th>Investment</th><th>Expected outcome</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Patch 3 critical CVEs</td><td>DevOps</td><td>&pound;5K</td><td>Eliminate immediate breach risk</td></tr>
+    <tr><td>1&ndash;2</td><td>IAM hardening: MFA, revoke shared credentials</td><td>DevOps</td><td>&pound;10K</td><td>Audit-ready access controls</td></tr>
+    <tr><td>2&ndash;4</td><td>Cloud cost reset: RDS right-sizing, reserved instances</td><td>DevOps</td><td>&pound;15K</td><td>&pound;219K annual savings (RDS + RI)</td></tr>
+    <tr><td>3&ndash;6</td><td>S3 cleanup + dev environment scheduling</td><td>DevOps</td><td>&pound;8K</td><td>&pound;84K additional annual savings</td></tr>
+    <tr><td>4&ndash;8</td><td>Documentation sprint: routing engine</td><td>Engineering</td><td>&pound;40K</td><td>Key-person risk from Critical to High</td></tr>
+    <tr><td>6&ndash;12</td><td>SOC 2 Type II programme launch</td><td>External + VP Eng</td><td>&pound;180K</td><td>Certification in Month 9&ndash;12</td></tr>
+  </tbody>
+</table>
+
+<h3>12-Month Technology Plan</h3>
+<table>
+  <thead><tr><th>Quarter</th><th>Focus</th><th>Investment</th><th>Expected impact</th></tr></thead>
+  <tbody>
+    <tr><td>Q1</td><td>Security remediation + cloud optimisation + documentation</td><td>&pound;258K</td><td>&pound;303K annual savings, security posture 2/5 &rarr; 3/5</td></tr>
+    <tr><td>Q2</td><td>SOC 2 programme + IaC migration + Python upgrade</td><td>&pound;275K</td><td>Enterprise sales unblocked, deployment time &ndash;80%</td></tr>
+    <tr><td>Q3</td><td>Architecture refactoring (Phase 1) + ML routing PoC</td><td>&pound;320K</td><td>Scalability ceiling raised to ~10x, ML routing validated</td></tr>
+    <tr><td>Q4</td><td>ML routing production launch + benchmark product design</td><td>&pound;280K</td><td>Premium tier launch (&pound;2.1M ARR opportunity)</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ METHODOLOGY ============ -->
+<div class="page-break"></div>
+
+<h1>Appendix: Methodology</h1>
+
+<h3>Assessment Framework</h3>
+<p>This report follows the Fulcrum 7-Dimension Technology Due Diligence Framework. Each dimension is assessed against standardised criteria and scored on a 1&ndash;5 scale:</p>
+
+<table>
+  <thead><tr><th>Score</th><th>Label</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Critical</td><td>Immediate risk to business operations. Emergency intervention required.</td></tr>
+    <tr><td>2</td><td>Significant</td><td>Major gaps impacting value creation plan. 6-month remediation.</td></tr>
+    <tr><td>3</td><td>Moderate</td><td>Functional but suboptimal. 12-month improvement roadmap.</td></tr>
+    <tr><td>4</td><td>Good</td><td>Minor gaps. Optimisation opportunities exist.</td></tr>
+    <tr><td>5</td><td>Excellent</td><td>Best-in-class for company size and stage.</td></tr>
+  </tbody>
+</table>
+
+<h3>Data Sources</h3>
+<ul>
+  <li>Source code review (GitHub repository, 14 repositories)</li>
+  <li>AWS console access (read-only, 3 days)</li>
+  <li>CI/CD pipeline review (GitHub Actions)</li>
+  <li>Datadog monitoring dashboards</li>
+  <li>Architecture documentation (Confluence, partial)</li>
+  <li>Organisation chart and team data (HR system export)</li>
+  <li>Financial data: technology spend breakdown (CFO-provided)</li>
+  <li>NCC Group penetration test report (November 2025)</li>
+  <li>Incident logs: PagerDuty (12 months)</li>
+  <li>Product roadmap (Linear)</li>
+  <li>Stakeholder interviews: CEO, VP Engineering, CPO, 2 team leads, DevOps lead (6 sessions, 8 hours total)</li>
+</ul>
+
+<h3>Limitations</h3>
+<p>This assessment was conducted over 10 working days based on information provided by Meridian's management team and direct observation of systems. Fulcrum did not conduct independent penetration testing (relying on the NCC Group report) or audit financial statements. Findings reflect conditions as of the assessment date.</p>
+
+<h3>Disclaimer</h3>
+<p>This report is prepared solely for the use of [PE Fund Name] in connection with the proposed acquisition of Meridian Software Ltd. The findings and recommendations represent Fulcrum's professional judgment as of the report date. This report should not be relied upon by any other party without Fulcrum's prior written consent.</p>
+
+<div style="margin-top: 30px; padding: 12px 16px; background: rgba(139, 64, 73, 0.06); border-left: 3px solid #8b4049;">
+  <p style="font-size: 8.5pt; color: #8b4049; font-weight: 500; margin: 0;"><strong>ILLUSTRATIVE SAMPLE</strong> &mdash; This report uses a fictional company (Meridian Software Ltd) to demonstrate the Fulcrum assessment methodology and deliverable format. All companies, individuals, data, scores, and financial figures are entirely fabricated for demonstration purposes. No actual due diligence was conducted.</p>
+</div>
+
+</body>
+</html>

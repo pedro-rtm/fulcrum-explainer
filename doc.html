@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --copper: #a0714f;
+      --copper-light: #c4956e;
+      --copper-bg: #a0714f12;
+      --copper-border: #a0714f30;
+      --bg: #faf8f5;
+      --bg-alt: #f2eeea;
+      --bg-card: #ffffff;
+      --text: #2a2520;
+      --text-secondary: #6b6058;
+      --text-light: #8a8078;
+      --border: #e8e2dc;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--copper);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .nav-back:hover { text-decoration: underline; }
+
+    .nav-title {
+      font-size: 14px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* DOC CONTENT */
+    .doc-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 72px 20px 60px;
+    }
+
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .doc-tag {
+      display: inline-block;
+      background: var(--copper-bg);
+      color: var(--copper);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    /* MARKDOWN STYLES */
+    .markdown-body h1 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(24px, 6vw, 34px);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .markdown-body h2 {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(19px, 4.5vw, 24px);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .markdown-body h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 28px;
+      margin-bottom: 10px;
+    }
+
+    .markdown-body h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+
+    .markdown-body p {
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+
+    .markdown-body ul, .markdown-body ol {
+      margin-bottom: 14px;
+      padding-left: 24px;
+    }
+
+    .markdown-body li {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .markdown-body li ul, .markdown-body li ol {
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    .markdown-body strong { color: var(--text); }
+
+    .markdown-body a {
+      color: var(--copper);
+      text-decoration: none;
+    }
+
+    .markdown-body a:hover { text-decoration: underline; }
+
+    .markdown-body blockquote {
+      border-left: 3px solid var(--copper);
+      margin: 16px 0;
+      padding: 12px 16px;
+      background: var(--copper-bg);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .markdown-body blockquote p {
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+
+    .markdown-body blockquote p + p { margin-top: 8px; }
+
+    .markdown-body code {
+      background: var(--bg-alt);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    .markdown-body pre {
+      background: #2a2520;
+      color: #e8e2dc;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      margin-bottom: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .markdown-body pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-size: 13px;
+    }
+
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .markdown-body thead th {
+      background: var(--bg-alt);
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .markdown-body tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .markdown-body tbody tr:hover { background: var(--copper-bg); }
+
+    .markdown-body hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    .markdown-body input[type="checkbox"] {
+      margin-right: 6px;
+      accent-color: var(--copper);
+    }
+
+    /* DOC INDEX */
+    .doc-index {
+      list-style: none;
+      padding: 0;
+    }
+
+    .doc-index li {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .doc-index a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s ease-out;
+    }
+
+    .doc-index a:hover { color: var(--copper); }
+
+    .doc-index .idx-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--copper-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .doc-index .idx-text h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .doc-index .idx-text p {
+      font-size: 13px;
+      color: var(--text-light);
+      margin: 0;
+    }
+
+    .doc-index .idx-arrow {
+      margin-left: auto;
+      color: var(--text-light);
+      flex-shrink: 0;
+    }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
+      font-size: 15px;
+    }
+
+    .loading::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--copper);
+      border-radius: 50%;
+      margin: 16px auto 0;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4l-4 4 4 4"/></svg>
+      Back
+    </a>
+    <span class="nav-title" id="navTitle">Documents</span>
+  </div>
+</nav>
+
+<div class="doc-container">
+  <div id="content">
+    <div class="loading">Loading document...</div>
+  </div>
+</div>
+
+<script>
+const docs = [
+  { file: 'strategy.md', title: 'Strategy & Positioning', icon: '&#127919;', desc: 'Master strategy, competitive landscape, brand architecture, risk register' },
+  { file: 'methodology.md', title: 'DD Methodology Framework', icon: '&#128209;', desc: 'The 7-dimension assessment framework, scoring, engagement structure' },
+  { file: 'learning-syllabus.md', title: 'Learning Syllabus', icon: '&#128218;', desc: '108-190 hours of structured study to become DD-ready in 10 weeks' },
+  { file: 'gap-analysis.md', title: 'Knowledge Gap Analysis', icon: '&#128200;', desc: 'Honest self-assessment across all 7 dimensions with hours to close each gap' },
+  { file: 'action-plan.md', title: 'Weekly Action Plan', icon: '&#128197;', desc: '36-week execution roadmap: study, pipeline, admin — week by week' },
+  { file: 'pricing.md', title: 'Pricing Strategy', icon: '&#128176;', desc: 'Market benchmarks, tier structure, Year 1 financial model' },
+  { file: 'lead-generation.md', title: 'Lead Generation Plan', icon: '&#128640;', desc: '6-layer go-to-market: warm network, advisory, LinkedIn, events, direct outreach' },
+  { file: 'report-template.md', title: 'DD Report Template', icon: '&#128196;', desc: 'The actual deliverable structure — what the investor receives' },
+  { file: 'sample-report.html', title: 'Sample DD Report', icon: '&#128203;', desc: 'Illustrative technology due diligence report (HTML)', external: true },
+  { file: 'sample-report.pdf', title: 'Sample DD Report (PDF)', icon: '&#128462;', desc: 'Illustrative report in downloadable PDF format', external: true },
+];
+
+function renderIndex() {
+  document.title = 'Documents — What Pedro Is Building';
+  document.getElementById('navTitle').textContent = 'All Documents';
+
+  const ul = document.createElement('ul');
+  ul.className = 'doc-index';
+
+  docs.forEach(d => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = d.external ? `docs/${d.file}` : `doc.html?file=${d.file}`;
+    if (d.external) a.target = '_blank';
+    a.innerHTML = `
+      <div class="idx-icon">${d.icon}</div>
+      <div class="idx-text">
+        <h3>${d.title}</h3>
+        <p>${d.desc}</p>
+      </div>
+      <svg class="idx-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg>
+    `;
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  const content = document.getElementById('content');
+  content.innerHTML = '';
+  const heading = document.createElement('h1');
+  heading.className = 'markdown-body';
+  heading.style.cssText = "font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(24px, 6vw, 34px); font-weight: 600; margin-bottom: 8px;";
+  heading.textContent = 'Full Documents';
+
+  const sub = document.createElement('p');
+  sub.style.cssText = 'font-size: 15px; color: var(--text-secondary); margin-bottom: 24px;';
+  sub.textContent = 'The complete strategy, methodology, and execution plan behind this venture.';
+
+  content.appendChild(heading);
+  content.appendChild(sub);
+  content.appendChild(ul);
+}
+
+async function renderDoc(file) {
+  const meta = docs.find(d => d.file === file);
+  const title = meta ? meta.title : file;
+  document.title = `${title} — What Pedro Is Building`;
+  document.getElementById('navTitle').textContent = title;
+
+  try {
+    const res = await fetch(`docs/${file}`);
+    if (!res.ok) throw new Error('File not found');
+    const md = await res.text();
+
+    const content = document.getElementById('content');
+    if (meta) {
+      const tags = document.createElement('div');
+      tags.className = 'doc-meta';
+      tags.innerHTML = `<span class="doc-tag">${meta.icon} ${meta.title}</span>`;
+      content.innerHTML = '';
+      content.appendChild(tags);
+    } else {
+      content.innerHTML = '';
+    }
+
+    const body = document.createElement('div');
+    body.className = 'markdown-body';
+    body.innerHTML = marked.parse(md);
+
+    // Open external links in new tab
+    body.querySelectorAll('a[href^="http"]').forEach(a => {
+      a.target = '_blank';
+      a.rel = 'noopener';
+    });
+
+    content.appendChild(body);
+    window.scrollTo(0, 0);
+  } catch (e) {
+    document.getElementById('content').innerHTML = `
+      <div class="loading" style="color: var(--copper);">
+        Could not load document: ${file}
+      </div>
+    `;
+  }
+}
+
+// Route
+const params = new URLSearchParams(window.location.search);
+const file = params.get('file');
+
+if (file) {
+  renderDoc(file);
+} else {
+  renderIndex();
+}
+</script>
+
+</body>
+</html>
