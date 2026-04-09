@@ -562,9 +562,10 @@
       transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     }
 
-    .fade-in.visible {
+    .fade-in.visible, .no-animate .fade-in {
       opacity: 1;
       transform: translateY(0);
+      transition: none;
     }
 
     /* ---- LANGUAGE TOGGLE ---- */
@@ -682,6 +683,16 @@
       color: var(--text-light);
     }
   </style>
+  <script>
+    // Detect back/forward navigation early — skip fade-in animations
+    // so elements have correct layout before browser restores scroll position
+    try {
+      var navType = performance.getEntriesByType('navigation')[0].type;
+      if (navType === 'back_forward') {
+        document.documentElement.classList.add('no-animate');
+      }
+    } catch(e) {}
+  </script>
 </head>
 <body>
 
@@ -1110,11 +1121,9 @@
     });
   });
 
-  // On back navigation, skip fade-in animations so scroll position restores correctly
+  // bfcache fallback — also skip animations when restored from cache
   window.addEventListener('pageshow', (e) => {
-    if (e.persisted) {
-      document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
-    }
+    if (e.persisted) document.documentElement.classList.add('no-animate');
   });
 
   // Dimension card accordion
