@@ -326,6 +326,26 @@
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--copper);
+      text-decoration: none;
+      border: 1px solid var(--copper-border);
+      border-radius: 20px;
+      transition: all 0.2s ease-out;
+    }
+
+    .read-more:hover {
+      background: var(--copper-bg);
+      border-color: var(--copper);
+    }
   </style>
 </head>
 <body>
@@ -355,9 +375,7 @@ const docs = [
   { file: 'action-plan.md', title: 'Weekly Action Plan', icon: '&#128197;', desc: '36-week execution roadmap: study, pipeline, admin — week by week' },
   { file: 'pricing.md', title: 'Pricing Strategy', icon: '&#128176;', desc: 'Market benchmarks, tier structure, Year 1 financial model' },
   { file: 'lead-generation.md', title: 'Lead Generation Plan', icon: '&#128640;', desc: '6-layer go-to-market: warm network, advisory, LinkedIn, events, direct outreach' },
-  { file: 'report-template.md', title: 'DD Report Template', icon: '&#128196;', desc: 'The actual deliverable structure — what the investor receives' },
-  { file: 'sample-report.html', title: 'Sample DD Report', icon: '&#128203;', desc: 'Illustrative technology due diligence report (HTML)', external: true },
-  { file: 'sample-report.pdf', title: 'Sample DD Report (PDF)', icon: '&#128462;', desc: 'Illustrative report in downloadable PDF format', external: true },
+  { file: 'sample-report.pdf', title: 'Sample DD Report', icon: '&#128196;', desc: 'Illustrative technology due diligence report — the actual deliverable', pdf: true },
 ];
 
 function renderIndex() {
@@ -398,6 +416,38 @@ function renderIndex() {
   content.appendChild(heading);
   content.appendChild(sub);
   content.appendChild(ul);
+}
+
+function renderPdf(file) {
+  const meta = docs.find(d => d.file === file);
+  const title = meta ? meta.title : file;
+  document.title = `${title} — What Pedro Is Building`;
+  document.getElementById('navTitle').textContent = title;
+
+  const content = document.getElementById('content');
+  content.innerHTML = '';
+
+  if (meta) {
+    const tags = document.createElement('div');
+    tags.className = 'doc-meta';
+    tags.innerHTML = `<span class="doc-tag">${meta.icon} ${meta.title}</span>`;
+    content.appendChild(tags);
+  }
+
+  const iframe = document.createElement('iframe');
+  iframe.src = `docs/${file}`;
+  iframe.style.cssText = 'width: 100%; height: calc(100vh - 120px); border: 1px solid var(--border); border-radius: 8px;';
+  content.appendChild(iframe);
+
+  const dl = document.createElement('a');
+  dl.href = `docs/${file}`;
+  dl.download = file;
+  dl.className = 'read-more';
+  dl.style.marginTop = '16px';
+  dl.innerHTML = 'Download PDF <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3v8m-3-3l3 3 3-3"/></svg>';
+  content.appendChild(dl);
+
+  window.scrollTo(0, 0);
 }
 
 async function renderDoc(file) {
@@ -448,7 +498,12 @@ const params = new URLSearchParams(window.location.search);
 const file = params.get('file');
 
 if (file) {
-  renderDoc(file);
+  const meta = docs.find(d => d.file === file);
+  if (meta && meta.pdf) {
+    renderPdf(file);
+  } else {
+    renderDoc(file);
+  }
 } else {
   renderIndex();
 }
