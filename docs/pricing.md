@@ -1,4 +1,4 @@
-# Pricing Strategy — Intregis (working name)
+# Pricing Strategy — Valepath (working name)
 
 **Date:** April 2026
 
@@ -16,7 +16,7 @@
 
 ---
 
-## Intregis Pricing (Phase 0)
+## Valepath Pricing (Phase 0)
 
 ### Technology Due Diligence
 

@@ -1,6 +1,6 @@
 # Technology Due Diligence Report — Template v1
 
-**Practice:** Intregis (working name)
+**Practice:** Valepath (working name)
 **Confidentiality:** [CONFIDENTIAL — Prepared for [PE Firm Name] in connection with the proposed acquisition of [Target Company Name]]
 
 ---
@@ -15,7 +15,7 @@ Prepared for [PE Firm Name]
 
 [Date]
 
-Intregis
+Valepath
 Pedro Rivera Torres Moir
 Founder & Principal
 
@@ -405,7 +405,7 @@ Composite       [██████░░░░] 3.4/5
 
 ### Assessment Methodology
 
-This report follows the Intregis 7-Dimension Technology DD Framework:
+This report follows the Valepath 7-Dimension Technology DD Framework:
 
 1. **Architecture & Infrastructure** — system topology, cloud maturity, technical debt, scalability
 2. **Team & Organization** — headcount, composition, key-person risk, hiring plan
@@ -441,4 +441,4 @@ This report follows the Intregis 7-Dimension Technology DD Framework:
 
 ### Disclaimer
 
-This report is prepared solely for the use of [PE Firm Name] in connection with the proposed acquisition of [Target Company Name]. The findings and recommendations are based on information provided during the assessment period and represent Intregis's professional judgment as of the report date. This report should not be relied upon by any other party without Intregis's prior written consent.
+This report is prepared solely for the use of [PE Firm Name] in connection with the proposed acquisition of [Target Company Name]. The findings and recommendations are based on information provided during the assessment period and represent Valepath's professional judgment as of the report date. This report should not be relied upon by any other party without Valepath's prior written consent.

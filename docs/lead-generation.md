@@ -1,4 +1,4 @@
-# Lead Generation Plan — Intregis (working name)
+# Lead Generation Plan — Valepath (working name)
 
 **Date:** April 2026
 **Target:** Constant flow of PE technology DD engagements

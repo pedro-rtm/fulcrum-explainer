@@ -1,7 +1,7 @@
 # Strategy & Positioning — PE Technology Due Diligence
 
 **Status:** ACTIVE (April 2026)
-**Working brand name:** Intregis (placeholder — see `brand-names.md`)
+**Working brand name:** Valepath (placeholder — see `brand-names.md`)
 
 ---
 
@@ -155,12 +155,12 @@ Every minute spent on SEO, domain optimization, or marketing is a minute not spe
 ## 6. Brand Strategy
 
 ### Architecture
-- **Intregis** (intregis.com or similar) — the DD practice. PE-facing. Register B (Ink/Stone) design
-- **pedrortm.com** — personal site. Broad brand. Routes to Intregis + personal projects + Substack
+- **Valepath** (valepath.com or similar) — the DD practice. PE-facing. Register B (Ink/Stone) design
+- **pedrortm.com** — personal site. Broad brand. Routes to Valepath + personal projects + Substack
 - **velkan.io** — archived. "Velkan delivered technology transformations (2012–2020)." Case studies preserved
 
 ### Why company brand > personal brand
-- PE firms contract with firms (IC memo: "we retained Intregis" > "we hired Pedro")
+- PE firms contract with firms (IC memo: "we retained Valepath" > "we hired Pedro")
 - Continuity signal (bench depth, even if contractors)
 - Houses future SaaS product (Phases 3–5)
 - Scales with associates

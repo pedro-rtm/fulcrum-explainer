@@ -1,6 +1,6 @@
 # Technology Due Diligence Framework v0.1
 
-**Practice:** Intregis (working name)
+**Practice:** Valepath (working name)
 **Author:** Pedro Rivera Torres Moir
 **Date:** April 2026
 
