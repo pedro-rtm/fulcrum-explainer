@@ -1,4 +1,4 @@
-# Lead Generation Plan — Fulcrum (working name)
+# Lead Generation Plan — Intregis (working name)
 
 **Date:** April 2026
 **Target:** Constant flow of PE technology DD engagements

@@ -1,4 +1,4 @@
-# Pricing Strategy — Fulcrum (working name)
+# Pricing Strategy — Intregis (working name)
 
 **Date:** April 2026
 
@@ -16,7 +16,7 @@
 
 ---
 
-## Fulcrum Pricing (Phase 0)
+## Intregis Pricing (Phase 0)
 
 ### Technology Due Diligence
 

@@ -1,6 +1,6 @@
 # Technology Due Diligence Framework v0.1
 
-**Practice:** Fulcrum (working name)
+**Practice:** Intregis (working name)
 **Author:** Pedro Rivera Torres Moir
 **Date:** April 2026
 

@@ -62,7 +62,7 @@
 ### DO (admin)
 - [ ] Register domain for chosen brand name
 - [ ] Set up email on new domain (Google Workspace)
-- [ ] Update LinkedIn experience: add Fulcrum, change Velkan dates to 2012-2020
+- [ ] Update LinkedIn experience: add Intregis, change Velkan dates to 2012-2020
 - [ ] Update LinkedIn Featured section
 
 ---
@@ -229,7 +229,7 @@
 - [ ] Advisory network calls (ongoing)
 
 ### DO (admin)
-- [ ] Update Fulcrum website with mock DD insights (refine deliverable examples if needed)
+- [ ] Update Intregis website with mock DD insights (refine deliverable examples if needed)
 - [ ] Add mock DD report (anonymised) as downloadable sample on website
 
 ---
